@@ -4,9 +4,16 @@ var zindex = 1
 
 function dragElement(elmnt) {
 	var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-	document.getElementById(elmnt.id).onmousedown = dragMouseDown;
+	var rect = elmnt.getBoundingClientRect();
+	var startposX = rect.left;
+	var startposY = rect.top;
+	elmnt.onmousedown = dragMouseDown;
 
 	function dragMouseDown(e) {
+		var vratse = true;
+
+		console.log(startposX, startposY);
+
 		elmnt.style.zIndex = (zindex + 1).toString();
 		zindex += 1;
 		e = e || window.event;
@@ -48,21 +55,56 @@ function dragElement(elmnt) {
 		else if (left < 0) //vlevo
 		{ elmnt.style.left = 0 + "px"; }
 
-		mousemove(e)
+		vboxu(e)
+	}
+
+	function vboxu(e) {
+		var ebox = document.getElementById(elmnt.id+"box")
+		var box = element.getBoundingClientRect();
+		if (e.clientX > box.left  && e.clientY > box.top &&
+			e.clientX < box.right && e.clientY < box.bottom) { //uvnitr
+			document.getElementById(elmnt.id + "uvnitr").textContent = elmnt.id + " uvnitr=true";
+			ebox.style.backgroundcolor = "green";
+			vratse = false
+		} else { //mimo
+			document.getElementById(elmnt.id + "uvnitr").textContent = elmnt.id + " uvnitr=false";
+			ebox.style.backgroundcolor = "red";
+			vratse = true
+		}
+		console.log(vratse)
 	}
 
 	function closeDragElement() {
+		if (vratse)
+		{
+			console.log(elmnt, startposX, startposY)
+			translate(elmnt, startposX, startposY)
+		}
 		document.onmouseup = null;
 		document.onmousemove = null;
 	}
 }
 
-function mousemove(e) {
-	var lednice = document.getElementById("lednicka").getBoundingClientRect();
-	if (e.clientX > lednice.left  && e.clientY > lednice.top &&
-		e.clientX < lednice.right && e.clientY < lednice.bottom) {
-			document.getElementById("lednickaimg").src="lednicka_open.png";
-	} else {
-		document.getElementById("lednickaimg").src="lednicka_close.png";
-	}
+function translate( elem, x, y ) {
+    var left = parseInt( css( elem, 'left' ), 10 ),
+        top = parseInt( css( elem, 'top' ), 10 ),
+        dx = left - x,
+        dy = top - y,
+        i = 1,
+        count = 20,
+        delay = 20;
+
+    function loop() {
+        if ( i >= count ) { return; }
+        i += 1;
+        elem.style.left = ( left - ( dx * i / count ) ).toFixed( 0 ) + 'px';
+        elem.style.top = ( top - ( dy * i / count ) ).toFixed( 0 ) + 'px';
+        setTimeout( loop, delay );
+    }
+
+    loop();
+}
+
+function css( element, property ) {
+    return window.getComputedStyle( element, null ).getPropertyValue( property );
 }

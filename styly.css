@@ -9,6 +9,8 @@ html {
 	position: absolute;
 	left: 5px;
 	border: 3px solid gray;
+	top: 5px;
+	left: 5px
 }
 .lednicka {
 	width: 300px;
@@ -17,4 +19,12 @@ html {
 	padding: 0.5em;
 	top: 20px;
 	background-color: gray;
+}
+.box {
+	width: 300px;
+	height: 400px;
+	margin: auto;
+	padding: 0.5em;
+	top: 20px;
+	background-color: red;
 }
