@@ -8,9 +8,8 @@ function dragElement(elmnt) {
 	var startposX = rect.left;
 	var startposY = rect.top;
 	elmnt.onmousedown = dragMouseDown;
-
+	var vratse = true;
 	function dragMouseDown(e) {
-		var vratse = true;
 
 		console.log(startposX, startposY);
 
@@ -60,7 +59,7 @@ function dragElement(elmnt) {
 
 	function vboxu(e) {
 		var ebox = document.getElementById(elmnt.id+"box")
-		var box = element.getBoundingClientRect();
+		var box = ebox.getBoundingClientRect();
 		if (e.clientX > box.left  && e.clientY > box.top &&
 			e.clientX < box.right && e.clientY < box.bottom) { //uvnitr
 			document.getElementById(elmnt.id + "uvnitr").textContent = elmnt.id + " uvnitr=true";
