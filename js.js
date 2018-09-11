@@ -7,12 +7,13 @@ function dragElement(elmnt) {
 	var rect = elmnt.getBoundingClientRect();
 	var startposX = rect.left;
 	var startposY = rect.top;
-	elmnt.onmousedown = dragMouseDown;
+	var ebox = document.getElementById(elmnt.id+"box")
+	var box = ebox.getBoundingClientRect();
 	var vratse = true;
+	ebox.style.backgroundColor = "red";
+	elmnt.onmousedown = dragMouseDown;
+	
 	function dragMouseDown(e) {
-
-		console.log(startposX, startposY);
-
 		elmnt.style.zIndex = (zindex + 1).toString();
 		zindex += 1;
 		e = e || window.event;
@@ -58,25 +59,22 @@ function dragElement(elmnt) {
 	}
 
 	function vboxu(e) {
-		var ebox = document.getElementById(elmnt.id+"box")
-		var box = ebox.getBoundingClientRect();
+		
 		if (e.clientX > box.left  && e.clientY > box.top &&
 			e.clientX < box.right && e.clientY < box.bottom) { //uvnitr
 			document.getElementById(elmnt.id + "uvnitr").textContent = elmnt.id + " uvnitr=true";
-			ebox.style.backgroundcolor = "green";
+			ebox.style.backgroundColor = "green";
 			vratse = false
 		} else { //mimo
 			document.getElementById(elmnt.id + "uvnitr").textContent = elmnt.id + " uvnitr=false";
-			ebox.style.backgroundcolor = "red";
+			ebox.style.backgroundColor = "red";
 			vratse = true
 		}
-		console.log(vratse)
 	}
 
 	function closeDragElement() {
-		if (vratse)
-		{
-			console.log(elmnt, startposX, startposY)
+		if (vratse) {
+			console.log(elmnt.id, startposX, startposY)
 			translate(elmnt, startposX, startposY)
 		}
 		document.onmouseup = null;
@@ -84,9 +82,9 @@ function dragElement(elmnt) {
 	}
 }
 
-function translate( elem, x, y ) {
-    var left = parseInt( css( elem, 'left' ), 10 ),
-        top = parseInt( css( elem, 'top' ), 10 ),
+function translate(elem, x, y) {
+    var left = parseInt(css(elem, 'left'), 10),
+        top = parseInt(css(elem, 'top'), 10),
         dx = left - x,
         dy = top - y,
         i = 1,
@@ -94,16 +92,16 @@ function translate( elem, x, y ) {
         delay = 20;
 
     function loop() {
-        if ( i >= count ) { return; }
+        if (i >= count) { return; }
         i += 1;
-        elem.style.left = ( left - ( dx * i / count ) ).toFixed( 0 ) + 'px';
-        elem.style.top = ( top - ( dy * i / count ) ).toFixed( 0 ) + 'px';
-        setTimeout( loop, delay );
+        elem.style.left = (left - (dx * i / count)).toFixed(0) + 'px';
+        elem.style.top = (top - (dy * i / count)).toFixed(0) + 'px';
+        setTimeout(loop, delay);
     }
 
     loop();
 }
 
-function css( element, property ) {
-    return window.getComputedStyle( element, null ).getPropertyValue( property );
+function css(element, property) {
+    return window.getComputedStyle(element, null).getPropertyValue(property);
 }
