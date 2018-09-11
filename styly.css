@@ -1,29 +1,20 @@
-html {
+html, body {
 	height: 100%;
 	width: 100%;
 }
+* {
+	margin: 0px;
+}
 .jidlo {
-	padding: 0.1em;
 	background-color: white;
 	cursor: move;
 	position: absolute;
-	left: 5px;
 	border: 3px solid gray;
-	top: 5px;
-	left: 5px
-}
-.lednicka {
-	width: 300px;
-	height: 500px;
-	margin: auto;
-	padding: 0.5em;
-	top: 20px;
-	background-color: gray;
+	top: 60%;
 }
 .box {
-	width: 300px;
-	height: 400px;
-	margin: auto;
-	padding: 0.5em;
-	top: 20px;
+	width: 25%;
+	height: 30%;
+	top: 20%;
+	position: absolute;
 }

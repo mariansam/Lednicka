@@ -1,6 +1,6 @@
+var zindex = 1
 dragElement(document.getElementById("hruska"));
 dragElement(document.getElementById("banan"));
-var zindex = 1
 
 function dragElement(elmnt) {
 	var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
@@ -23,7 +23,6 @@ function dragElement(elmnt) {
 		document.onmouseup = closeDragElement;
 		document.onmousemove = elementDrag;
 	}
-
 	function elementDrag(e) {
 		e = e || window.event;
 		e.preventDefault();
@@ -57,9 +56,7 @@ function dragElement(elmnt) {
 
 		vboxu(e)
 	}
-
 	function vboxu(e) {
-		
 		if (e.clientX > box.left  && e.clientY > box.top &&
 			e.clientX < box.right && e.clientY < box.bottom) { //uvnitr
 			document.getElementById(elmnt.id + "uvnitr").textContent = elmnt.id + " uvnitr=true";
@@ -71,17 +68,14 @@ function dragElement(elmnt) {
 			vratse = true
 		}
 	}
-
 	function closeDragElement() {
 		if (vratse) {
-			console.log(elmnt.id, startposX, startposY)
 			translate(elmnt, startposX, startposY)
 		}
 		document.onmouseup = null;
 		document.onmousemove = null;
 	}
 }
-
 function translate(elem, x, y) {
     var left = parseInt(css(elem, 'left'), 10),
         top = parseInt(css(elem, 'top'), 10),
@@ -98,10 +92,8 @@ function translate(elem, x, y) {
         elem.style.top = (top - (dy * i / count)).toFixed(0) + 'px';
         setTimeout(loop, delay);
     }
-
     loop();
 }
-
 function css(element, property) {
     return window.getComputedStyle(element, null).getPropertyValue(property);
 }
