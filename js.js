@@ -1,6 +1,11 @@
 var zindex = 1
-dragElement(document.getElementById("hruska"));
-dragElement(document.getElementById("banan"));
+var IDs = ["hruska", "banan"];
+
+function resize() {
+	IDs.forEach(element => {
+		dragElement(document.getElementById(element));
+	});
+}
 
 function dragElement(elmnt) {
 	var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
@@ -75,25 +80,31 @@ function dragElement(elmnt) {
 		document.onmouseup = null;
 		document.onmousemove = null;
 	}
+	function drop() {
+		translate(elmnt, startposX, startposY)
+		document.onmouseup = null;
+		document.onmousemove = null;
+	}
+	function translate(elem, x, y) {
+		var left = parseInt(window.getComputedStyle(elem, null).getPropertyValue('left'), 10);
+		var top = parseInt(window.getComputedStyle(elem, null).getPropertyValue('top'), 10);
+		var dx = left - x;
+		var dy = top - y;
+		var i = 1;
+		var count = 20;
+		var delay = 20;
+	
+		function loop() {
+			if (i >= count) { return; }
+			i += 1;
+			elem.style.left = (left - (dx * i / count)).toFixed(0) + 'px';
+			elem.style.top = (top - (dy * i / count)).toFixed(0) + 'px';
+			setTimeout(loop, delay);
+		}
+		loop();
+	}
 }
-function translate(elem, x, y) {
-    var left = parseInt(css(elem, 'left'), 10),
-        top = parseInt(css(elem, 'top'), 10),
-        dx = left - x,
-        dy = top - y,
-        i = 1,
-        count = 20,
-        delay = 20;
 
-    function loop() {
-        if (i >= count) { return; }
-        i += 1;
-        elem.style.left = (left - (dx * i / count)).toFixed(0) + 'px';
-        elem.style.top = (top - (dy * i / count)).toFixed(0) + 'px';
-        setTimeout(loop, delay);
-    }
-    loop();
-}
-function css(element, property) {
-    return window.getComputedStyle(element, null).getPropertyValue(property);
-}
+document.mouseleave(function () {
+    alert()
+});
