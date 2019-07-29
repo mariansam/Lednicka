@@ -1,5 +1,5 @@
 var zindex = 1;
-var IDs = ["hruska", "banan"];
+var IDs = ["hruska", "banan", "jabko"];
 var destroy = 0;
 
 function init() {
